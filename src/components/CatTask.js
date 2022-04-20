@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import '../App.css'
 
 export default function Task() {
   const [data, setData] = useState([])
@@ -28,32 +29,48 @@ export default function Task() {
     setDatas(data.cats)
   }
 
+  const apiData = datas.map((content, id) => {
+    const path = '/images/'
+    const photo = path + content.image
+    return (
+      <>
+        {loading && <h1>Loading...</h1>}
+        {data && (
+          <>
+            <div className='col-sm-10 col-md-5 col-lg-6 images' key={id}>
+              <img src={photo} alt='cats' />
+              <p>{content.name}</p>
+            </div>
+          </>
+        )}
+      </>
+    )
+  })
+
   if (error) {
     alert(error)
   }
 
   return (
     <>
-      {loading && <h1>Loading...</h1>}
-      <button onClick={sortCute}>Cute</button>
-      <button onClick={sortNotCute}>Not Cute</button>
-      <button onClick={sortNormal}>None</button>
-      <img src='/images/8.jpg' alt='cats' />
+      <h1>Incorpurrate gallery &#174;</h1>
+      <div className='buttons '>
+        {loading && <h1>Loading...</h1>}
 
-      {datas.map((results, id) => {
-        const path = '/images/'
-        const photo = path + results.image
-        return (
-          <div key={id}>
-            {data && (
-              <li>
-                <img src={photo} alt='cats' />
-                <p>{results.name}</p>
-              </li>
-            )}
-          </div>
-        )
-      })}
+        <button className='btn-all' onClick={sortNormal}>
+          None
+        </button>
+
+        <button className='btn-all' onClick={sortCute}>
+          Much Cute
+        </button>
+        <button className='btn-all' onClick={sortNotCute}>
+          Not Cute
+        </button>
+      </div>
+      <div className='container mx-auto'>
+        <div className='row'>{apiData}</div>
+      </div>
     </>
   )
 }

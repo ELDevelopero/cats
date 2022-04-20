@@ -25,7 +25,7 @@ func handleData(w http.ResponseWriter, r *http.Request) {
 
 	// Open our jsonFile
 	jsonFile, err := os.Open("./catdata.json")
-	// if we os.Open returns an error then handle it
+
 	if err != nil {
 		fmt.Println(err)
 	}
